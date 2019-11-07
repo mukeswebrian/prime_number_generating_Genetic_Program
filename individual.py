@@ -5,33 +5,46 @@ import pandas as pd
 import matlab.engine
 import random
 
-class Tree():
+class Individual():
     '''
     This class generates a random tree using a specified
     set of operators
     '''
     def __init__(self, a_range, b_range, pset, min_depth, max_depth):
         
+        self.a_range = a_range
+        self.b_range = b_range
+        self.min_depth = min_depth
+        self.max_depth = max_depth
+        self.pset = pset
+        
         # initalize fitness as 0 (all newly created trees are initalized with minimum fitness)
         self.fitness = 0
         
+        # initalize with empty tree
+        self.tree = None
+        
+    def make_tree(self):
+        
         # spefify the maximum and minimum values of the random constants a and b
-        self.a = random.randint(a_range[0], a_range[1])
-        self.b = random.randint(b_range[0], b_range[1])
+        self.a = random.randint(self.a_range[0], self.a_range[1])
+        self.b = random.randint(self.b_range[0], self.b_range[1])
         
         # add terminal primitives the tree's primitive set specific
-        self.pset = pset
         self.pset.addTerminal(self.a, int)
         self.pset.addTerminal(self.b, int)
         
-        expression = gp.genGrow(pset, min_=min_depth, max_=max_depth)
+        expression = gp.genGrow(self.pset, min_=self.min_depth, max_=self.max_depth)
         self.tree = gp.PrimitiveTree(expression)
         
     
     def plot(self, fig_name):
         
         '''
-        A method for visualizing a tree and sving the figure in a file
+        A method for visualizing a tree and saving the figure in a file
+        
+        Refernce: used plotting code from https://deap.readthedocs.io/en/1.0.x/tutorials/advanced/gp.html
+                  as a template
         '''
         nodes, edges, labels = gp.graph(self.tree)
         
@@ -68,9 +81,51 @@ class Tree():
     def get_tree(self):
         return self.tree
     
+    def get_pset(self):
+        return self.pset
+    
     def describe(self):
         return self.tree.__str__()
+    
+    def get_terminal_indicies(self):
         
+        indicies = []
+        
+        for i in range(0, len(self.tree)):
+            if self.is_terminal(self.tree[i]):
+                indicies.append(i)
+                
+        return indicies
+    
+    def get_non_terminal_indicies(self):
+        
+        indicies = []
+        
+        for i in range(0, len(self.tree)):
+            if not self.is_terminal(self.tree[i]):
+                indicies.append(i)
+                
+        return indicies
+    
+    def get_int_terminal_indicies(self):
+        
+        indicies = []
+        
+        for i in range(0, len(self.tree)):
+            if self.is_terminal(self.tree[i]):
+                if type(self.tree[i].value) is int:
+                    indicies.append(i)
+                
+        return indicies        
+    
+    def is_terminal(self, node):
+        '''
+        A method to check whether a specified node is a terminal node
+        '''
+        if type(node)==type(self.pset.terminals[int][0]):
+            return True
+        else:
+            return False
         
         
         

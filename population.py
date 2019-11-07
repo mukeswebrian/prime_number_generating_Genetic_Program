@@ -1,4 +1,4 @@
-import tree
+import individual
 
 class Population():
     
@@ -7,7 +7,8 @@ class Population():
         # create a population of tree individuals
         self.population = {}
         for i in range(0, population_size):
-            self.population[i] = tree.Tree(a_range, b_range, pset, min_depth, max_depth)
+            self.population[i] = individual.Individual(a_range, b_range, pset, min_depth, max_depth)
+            self.population[i].make_tree()
      
     def get_all(self):
         return self.population   
