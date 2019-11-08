@@ -58,10 +58,11 @@ class Individual():
         nx.draw_networkx_labels(g, pos, labels)
         plt.savefig(fig_name)
         
-    def calc_fitness(self, k_max=20):
+    def calc_fitness(self, calc_engine, k_max=20):
         '''
-        Fitness is calculated as the number of values k in the range 0 to k_max for
-        which the function generates unique prime numbers
+        Fitness method where fitness is calculated as the number of values k in 
+        the range 0 to k_max for which the function generates unique prime numbers
+        primality check is delegated to MATLAB is prime function
         '''
         # calulate the fitness of the tree
         func = gp.compile(self.tree, self.pset)
@@ -71,10 +72,10 @@ class Individual():
         unique_nums_generated = list( pd.Series([j for j in calc]).unique() )
         
         # use matlab engine to count the number of unique prime integers generated
-        eng = matlab.engine.start_matlab()
-        check_prime = map(eng.isprime, [int(i) for i in unique_nums_generated])
+        
+        check_prime = map(calc_engine.isprime, [int(i) for i in unique_nums_generated])
         self.fitness = [i for i  in check_prime].count(True)
-        eng.exit()
+        
         
         return self.fitness
         
