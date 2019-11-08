@@ -15,7 +15,8 @@ class Experiment():
                  max_depth=4, 
                  a_range=(1,9), 
                  b_range=(1,9),
-                 p_mutate=0.1):
+                 p_mutate=0.1,
+                 calc_eng=None):
         
         # initalize experiment variables
         self.exp_id = exp_id # experiemnt id
@@ -28,6 +29,7 @@ class Experiment():
         self.a_range = a_range # the range(inclusive) within which to search for constants a
         self.b_range = b_range # the range(inclusive) within which to search for constants b
         self.p_mutate = p_mutate # the probabilty of mutation
+        self.calc_eng = calc_eng # external computation engine to use for primality checking
         
         self.populate()
         
@@ -85,7 +87,8 @@ class Experiment():
             # perform fitness based selection to maintain original population size
             evol.select(population=self.population,
                         n_selection=self.p_size, 
-                        k_max=self.k_max)
+                        k_max=self.k_max,
+                        calc_eng=self.calc_eng)
             
             # check early-termination condition
             if self.population.max_fitness > (self.f_threshold*self.k_max):

@@ -1,6 +1,14 @@
 from experiment import Experiment
 import pandas as pd
 import time
+import primality_checker as custom_engine
+
+use_matlab = False
+
+if use_matlab:
+    eng = matlab.engine.start_matlab()
+else:
+    eng = custom_engine.Checker()
 
 if __name__=='__main__':
     
@@ -27,7 +35,8 @@ if __name__=='__main__':
                                 max_depth=el.max_depth.iloc[i], 
                                 a_range=(a_min,a_max), 
                                 b_range=(b_min,b_max),
-                                p_mutate=el.p_mutate.iloc[i])
+                                p_mutate=el.p_mutate.iloc[i],
+								calc_eng=eng)
         
     print('Experiment initalization complete!\n')
         
@@ -42,5 +51,9 @@ if __name__=='__main__':
 
         end = time.time() # stop timer
         print('completed in: '+str(end-strt)+' seconds')
-        
+    
+	# close matlab engine if it was used for calculation
+    if use_matlab:
+        eng.exit()
+		
     print('Done')

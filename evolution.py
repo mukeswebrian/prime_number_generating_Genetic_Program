@@ -129,7 +129,7 @@ class Evolution():
             
         return pairs
     
-    def select(self, population, n_selection, k_max=20):
+    def select(self, population, n_selection, calc_eng, k_max=20):
         '''
         selects a specified number of individuals from a population.
         
@@ -148,7 +148,7 @@ class Evolution():
             scores = {}
             
             for key in individuals.keys():
-                scores[key] = individuals[key].calc_fitness()
+                scores[key] = individuals[key].calc_fitness(calc_engine=calc_eng, k_max=k_max)
                 
             #print(scores)
             
