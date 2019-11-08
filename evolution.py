@@ -1,6 +1,7 @@
 import random
 import individual
 import copy
+import pandas as pd
 
 class Evolution():
     '''
@@ -113,6 +114,61 @@ class Evolution():
      
         return new_ind1, new_ind2
     
-    def select(self, population):
-        pass
+    def make_random_pairs(self, ids):
+        '''
+        A method for randomly pairing up individuals in a population for the
+        purposes of cross over
+        '''
+        pairs = []
+        if len(ids)%2 == 0:
+            r = random.sample(ids, len(ids))
+        
+            for j in range(len(ids)-1):
+                if j%2 == 0:
+                    pairs.append(r[j:j+2])
+            
+        return pairs
+    
+    def select(self, population, n_selection, k_max=20):
+        '''
+        selects a specified number of individuals from a population.
+        
+        selection is done by dropping the least fit members from the population
+        and keeping only the fittest n_selection members.
+        '''
+        
+        if n_selection >= population.get_size():
+            return population
+        
+        elif n_selection < population.get_size():
+            n_drop = population.get_size() - n_selection
+            
+            # get fitness scores
+            individuals = population.get_all()
+            scores = {}
+            
+            for key in individuals.keys():
+                scores[key] = individuals[key].calc_fitness()
+                
+            #print(scores)
+            
+            # identify individuals to be dropped
+            scores = pd.Series(scores).sort_values()
+            to_drop = scores.index[:n_drop]
+            
+            # drop unfit individuals
+            for i in to_drop:
+                population.get_all().pop(i)
+                
+            # update maximum fitness
+            population.max_fitness = scores.max()
+            
+            # reset individual ids
+            #j = 0
+            #for key in population.get_all().keys():
+                #population.get_all()[j] = population.get_all()pop(key)
+                #j += 1
+            
+                
+            
     
