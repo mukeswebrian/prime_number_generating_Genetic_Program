@@ -2,7 +2,6 @@ from deap import gp
 import networkx as nx
 import matplotlib.pyplot as plt
 import pandas as pd
-import matlab.engine
 import random
 
 class Individual():

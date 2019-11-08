@@ -6,6 +6,7 @@ import primality_checker as custom_engine
 use_matlab = False
 
 if use_matlab:
+    import matlab.engine
     eng = matlab.engine.start_matlab()
 else:
     eng = custom_engine.Checker()
