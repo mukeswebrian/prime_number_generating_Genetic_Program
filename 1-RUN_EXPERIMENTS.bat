@@ -1,2 +1,2 @@
-python controller.py > EXPERIMENT_lOG.txt
+python controller.py > EXPERIMENT_LOG.txt
 pause
