@@ -47,7 +47,7 @@ class Evolution():
             
         else:
              # if node is non-terminal
-            non_terminals = ['add', 'mul1','sqr']
+            non_terminals = ['add', 'mul']
             non_terminals.remove(node.name)
             
             new_node_name = random.choice(non_terminals)
@@ -169,13 +169,3 @@ class Evolution():
                 
             # update maximum fitness
             population.max_fitness = scores.max()
-            
-            # reset individual ids
-            #j = 0
-            #for key in population.get_all().keys():
-                #population.get_all()[j] = population.get_all()pop(key)
-                #j += 1
-            
-                
-            
-    

@@ -102,10 +102,9 @@ class Experiment():
                     pass					
                 #print('\n\n')
                 
-            p_max = 100
             # perform fitness based selection to maintain original population size
             evol.select(population=self.population,
-                        n_selection=p_max, 
+                        n_selection=self.p_size, 
                         k_max=self.k_max,
                         calc_eng=self.calc_eng)
             

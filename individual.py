@@ -66,12 +66,12 @@ class Individual():
         the range 0 to k_max for which the function generates unique prime numbers
         primality check is delegated to MATLAB is prime function
         '''
-        # calulate the fitness of the tree
+        # compile the tree
         func = gp.compile(self.tree, self.pset)
         
         # get a list of all the unique integers generated
         k = [i for i in range(0, k_max)]
-        calc = map(func, k, k)
+        calc = map(func, k)
         unique_nums_generated = list( pd.Series([j for j in calc]).unique() )
 		
         
@@ -138,14 +138,21 @@ class Individual():
             return True
         else:
             return False
+
+    def generate_primes(self, k_max):
+	
+        # compile the tree
+        func = gp.compile(self.tree, self.pset)
         
+        # get a list of all the unique integers generated
+        k = [i for i in range(0, k_max)]
+        calc = map(func, k)
+        unique_nums_generated = list( pd.Series([j for j in calc]).unique() )
         
-        
-        
-        
-        
-    
-        
-                
-        
-        
+        # Extract prime numbers		
+        nums = []		
+        for i in range(0, len(unique_nums_generated)):
+            if check_prime[i]:
+                nums.append(unique_nums_generated[i])
+
+        return nums				
