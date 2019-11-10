@@ -9,8 +9,11 @@ class Operator():
     def add(self, arg1, arg2):
         return sum([arg1, arg2])
         
-    def mul(self, arg1, arg2):
+    def mul1(self, arg1, arg2):
         return arg1*arg2
+		
+    def sqr(self, arg1, arg2):
+        return arg1*arg1
     '''
     def sub(self, arg1, arg2):
         return arg1 - arg2

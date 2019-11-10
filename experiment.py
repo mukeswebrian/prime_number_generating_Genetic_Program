@@ -2,6 +2,8 @@ from population import Population
 from primitive import Primitive as pm
 import evolution
 import random
+import primality_checker as custom_engine
+eng = custom_engine.Checker()
 
 class Experiment():
     
@@ -22,7 +24,7 @@ class Experiment():
         self.exp_id = exp_id # experiemnt id
         self.max_iter = max_iter # maximum number of generations allowed
         self.f_threshold = f_threshold # terminate early if the max_fitness exceeds f_threshold. (specified as a percentage of k_max)
-        self.p_size = p_size # the population size to be maintained (must be an even number)
+        self.p_size = p_size # the population size to be maintained
         self.k_max = k_max # the maximum number of unique prime numbers desired
         self.min_depth = min_depth # the minimum tree depth allowed
         self.max_depth = max_depth # the maximum tree depth allowed
@@ -42,6 +44,9 @@ class Experiment():
                                      pset=pm().get_pset(),
                                      min_depth=self.min_depth, 
                                      max_depth=self.max_depth)
+
+        # print inital population
+        self.population.describe()
         
     
     def run(self):
@@ -76,17 +81,31 @@ class Experiment():
                 # decide if mutation occurs for child 2    
                 if random.random() < self.p_mutate:
                     evol.mutate(child2)
-                    
-                # add off-spring to the population
-                self.population.add_individual(child1)
-                self.population.add_individual(child2)
                 
+                # update child fitness
+                child1.calc_fitness(eng)
+                child2.calc_fitness(eng)	
+				
+                # add off-spring to the population
+                if child1.fitness > parent1.fitness:
+                    self.population.add_individual(child1)
+                elif child1.fitness == parent1.fitness:
+                    self.population.replace_individual(pair[0], child1)
+                else:
+                    pass
+					
+                if child2.fitness > parent2.fitness:
+                    self.population.add_individual(child2)
+                elif child1.fitness == parent1.fitness:
+                    self.population.replace_individual(pair[1], child2) 
+                else:
+                    pass					
                 #print('\n\n')
                 
-            
+            p_max = 100
             # perform fitness based selection to maintain original population size
             evol.select(population=self.population,
-                        n_selection=self.p_size, 
+                        n_selection=p_max, 
                         k_max=self.k_max,
                         calc_eng=self.calc_eng)
             

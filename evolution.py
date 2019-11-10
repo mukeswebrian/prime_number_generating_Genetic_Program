@@ -33,8 +33,13 @@ class Evolution():
              # if node is terminal
             
             if type(node.value) is int:
+			
                 # mutate if int
-                ind1.tree[node_index].value = node.value + random.choice([1,-1])
+                action = random.choice([1,2])
+                if action == 1:
+                    ind1.tree[node_index].value = node.value + random.choice([2,-2])
+                elif action==2:
+                    ind1.tree[node_index] = random.choice(ind1.get_pset().terminals[int])
                 
             else:
                 # check if node is a k do nothing
@@ -42,7 +47,7 @@ class Evolution():
             
         else:
              # if node is non-terminal
-            non_terminals = ['add', 'mul', 'sub']
+            non_terminals = ['add', 'mul1','sqr']
             non_terminals.remove(node.name)
             
             new_node_name = random.choice(non_terminals)
@@ -122,10 +127,12 @@ class Evolution():
         pairs = []
         if len(ids)%2 == 0:
             r = random.sample(ids, len(ids))
+        else:
+            r = random.sample(ids, len(ids)-1)
         
-            for j in range(len(ids)-1):
-                if j%2 == 0:
-                    pairs.append(r[j:j+2])
+        for j in range(len(ids)-1):
+            if j%2 == 0:
+                pairs.append(r[j:j+2])
             
         return pairs
     

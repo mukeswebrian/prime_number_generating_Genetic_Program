@@ -3,6 +3,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import pandas as pd
 import random
+import primality_checker as util
 
 class Individual():
     '''
@@ -25,13 +26,15 @@ class Individual():
         
     def make_tree(self):
         
+        seed_a = util.Checker(self.a_range[1])
+        seed_b = util.Checker(self.b_range[1])
         # spefify the maximum and minimum values of the random constants a and b
-        self.a = random.randint(self.a_range[0], self.a_range[1])
-        self.b = random.randint(self.b_range[0], self.b_range[1])
+        self.a = random.choice(seed_a.primes)
+        self.b = random.choice(seed_b.primes)
         
         # add terminal primitives the tree's primitive set specific
         self.pset.addTerminal(self.a, int)
-        self.pset.addTerminal(self.b, int)
+        #self.pset.addTerminal(self.b, int)
         
         expression = gp.genGrow(self.pset, min_=self.min_depth, max_=self.max_depth)
         self.tree = gp.PrimitiveTree(expression)
@@ -52,7 +55,7 @@ class Individual():
         g.add_edges_from(edges)
         pos = nx.drawing.layout.spring_layout(g)
 
-        nx.draw_networkx_nodes(g, pos)
+        nx.draw_networkx_nodes(g, pos, node_color='w', node_size=800, alpha=1.0)
         nx.draw_networkx_edges(g, pos)
         nx.draw_networkx_labels(g, pos, labels)
         plt.savefig(fig_name)
@@ -67,15 +70,24 @@ class Individual():
         func = gp.compile(self.tree, self.pset)
         
         # get a list of all the unique integers generated
-        calc = map(func, [i for i in range(0, k_max)])
+        k = [i for i in range(0, k_max)]
+        calc = map(func, k, k)
         unique_nums_generated = list( pd.Series([j for j in calc]).unique() )
+		
         
         # use matlab engine to count the number of unique prime integers generated
         
         check_prime = map(calc_engine.isprime, [int(i) for i in unique_nums_generated])
-        self.fitness = [i for i  in check_prime].count(True)
-        
-        
+        check_prime = [i for i  in check_prime]
+        self.fitness = check_prime.count(True)
+		
+        '''
+        nums = []		
+        for i in range(0, len(unique_nums_generated)):
+            if check_prime[i]:
+                nums.append(unique_nums_generated[i])
+        '''
+        #print(nums)
         return self.fitness
         
     def get_tree(self):
