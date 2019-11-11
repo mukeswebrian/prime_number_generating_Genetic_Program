@@ -29,7 +29,7 @@ How to run the program
 2 - Save and close the "experiment_list.xlsx" spreadsheet
 3 - Run the program as follows:
 	a - on a Windows machine simply double click the batch file "1-RUN_EXPERIMENTS.bat"
-	b - on a non Windows machine, ececute the command "python controller.py"
+	b - on a non Windows machine, execute the command "python controller.py"
 
 -------------------------------------------------------------------------------------------
 Output
