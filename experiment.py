@@ -16,9 +16,8 @@ class Experiment():
                  min_depth=1, 
                  max_depth=4, 
                  a_range=(1,9), 
-                 b_range=(1,9),
                  p_mutate=0.1,
-                 calc_eng=None):
+                 calc_eng=eng):
         
         # initalize experiment variables
         self.exp_id = exp_id # experiemnt id
@@ -28,10 +27,9 @@ class Experiment():
         self.k_max = k_max # the maximum number of unique prime numbers desired
         self.min_depth = min_depth # the minimum tree depth allowed
         self.max_depth = max_depth # the maximum tree depth allowed
-        self.a_range = a_range # the range(inclusive) within which to search for constants a
-        self.b_range = b_range # the range(inclusive) within which to search for constants b
-        self.p_mutate = p_mutate # the probabilty of mutation
-        self.calc_eng = calc_eng # external computation engine to use for primality checking
+        self.a_range = a_range # the range(inclusive) within from which to select a seed prime number at initialization
+        self.p_mutate = p_mutate # the probabilty that mutation occurs
+        self.calc_eng = calc_eng # computation engine to use for primality checking (use custom engine by default). Matlab engine can also be used
         
         self.populate()
         
@@ -40,13 +38,12 @@ class Experiment():
         # initialize population
         self.population = Population(init_population_size=self.p_size,
                                      a_range=self.a_range, 
-                                     b_range=self.b_range, 
                                      pset=pm().get_pset(),
                                      min_depth=self.min_depth, 
                                      max_depth=self.max_depth)
 
-        # print inital population
-        self.population.describe()
+        # uncomment to print inital population to stdout
+        # self.population.describe()
         
     
     def run(self):
@@ -55,9 +52,6 @@ class Experiment():
         evol = evolution.Evolution()
         
         for generation in range(self.max_iter):
-            #print('Computing generation: '+str(generation))
-            #self.population.describe()
-            #print('\n')
             
             # pair up parents
             pairs = evol.make_random_pairs(list(self.population.get_all().keys()))
@@ -69,11 +63,7 @@ class Experiment():
                 parent2 = self.population.get_individual(pair[1])
             
                 child1, child2 = evol.cross_over(parent1, parent2)
-                
-                #print('parents: '+parent1.describe()+' and '+parent2.describe())
-                #print('children: '+child1.describe()+' and '+child2.describe())
-                #print('\n')
-            
+                           
                 # decide if mutation occurs for child 1
                 if random.random() < self.p_mutate:
                     evol.mutate(child1)
@@ -100,7 +90,6 @@ class Experiment():
                     self.population.replace_individual(pair[1], child2) 
                 else:
                     pass					
-                #print('\n\n')
                 
             # perform fitness based selection to maintain original population size
             evol.select(population=self.population,
@@ -125,7 +114,6 @@ class Experiment():
 					 'min_depth'+', '+
 					 'max_depth'+', '+
 					 'a_range'+', '+
-					 'b_range'+', '+
 					 'p_mutate'+', '+'\n')
 					 
         report.write(str(self.max_iter)+', '+
@@ -135,8 +123,10 @@ class Experiment():
 					 str(self.min_depth)+', '+
 					 str(self.max_depth)+', '+
 					 str(self.a_range)+', '+
-					 str(self.b_range)+', '+
 					 str(self.p_mutate)+', '+'\n\n')
+        
+        # Report max fitness
+        report.write('Maximum Fitness: '+str(self.population.max_fitness)+'\n')		
         
         # write headings
         report.write('Fitness score : Individual \n')

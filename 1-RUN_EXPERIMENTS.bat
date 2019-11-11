@@ -1,3 +1,3 @@
 echo on
-python controller.py
+python controller.py > Run_Log.txt
 pause

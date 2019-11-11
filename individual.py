@@ -10,10 +10,10 @@ class Individual():
     This class generates a random tree using a specified
     set of operators
     '''
-    def __init__(self, a_range, b_range, pset, min_depth, max_depth):
+    def __init__(self, a_range, pset, min_depth, max_depth):
         
         self.a_range = a_range
-        self.b_range = b_range
+
         self.min_depth = min_depth
         self.max_depth = max_depth
         self.pset = pset
@@ -27,10 +27,10 @@ class Individual():
     def make_tree(self):
         
         seed_a = util.Checker(self.a_range[1])
-        seed_b = util.Checker(self.b_range[1])
+        #seed_b = util.Checker(self.b_range[1])
         # spefify the maximum and minimum values of the random constants a and b
         self.a = random.choice(seed_a.primes)
-        self.b = random.choice(seed_b.primes)
+        #self.b = random.choice(seed_b.primes)
         
         # add terminal primitives the tree's primitive set specific
         self.pset.addTerminal(self.a, int)
@@ -75,19 +75,10 @@ class Individual():
         unique_nums_generated = list( pd.Series([j for j in calc]).unique() )
 		
         
-        # use matlab engine to count the number of unique prime integers generated
-        
+        # count the number of unique prime integers generated
         check_prime = map(calc_engine.isprime, [int(i) for i in unique_nums_generated])
-        check_prime = [i for i  in check_prime]
-        self.fitness = check_prime.count(True)
-		
-        '''
-        nums = []		
-        for i in range(0, len(unique_nums_generated)):
-            if check_prime[i]:
-                nums.append(unique_nums_generated[i])
-        '''
-        #print(nums)
+        self.fitness = [i for i  in check_prime].count(True)
+
         return self.fitness
         
     def get_tree(self):

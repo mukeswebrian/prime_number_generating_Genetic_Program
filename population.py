@@ -4,7 +4,7 @@ eng = custom_engine.Checker()
 
 class Population():
     
-    def __init__(self, init_population_size, a_range, b_range, min_depth, max_depth, pset):
+    def __init__(self, init_population_size, a_range, min_depth, max_depth, pset):
         
         # fitness of the fittest individual in the population (intialized as 0)
         self.max_fitness = 0
@@ -12,7 +12,7 @@ class Population():
         # create a population of tree individuals
         self.population = {}
         for i in range(0, init_population_size):
-            self.population[i] = individual.Individual(a_range, b_range, pset, min_depth, max_depth)
+            self.population[i] = individual.Individual(a_range, pset, min_depth, max_depth)
             self.population[i].make_tree()
             self.population[i].calc_fitness(eng)
      

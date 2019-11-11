@@ -20,7 +20,7 @@ class Evolution():
         the node is replaced by a different operator that is also selected at random
      
         if the selected node is a terminal node, the node is randomly increamented or 
-        decremented by 1 with equal probability
+        decremented by 2 with equal probability
      
         The mutation is performed in place
      
@@ -67,10 +67,10 @@ class Evolution():
         
         '''
         # create new individuals
-        new_ind1 = individual.Individual(ind1.a_range, ind1.b_range, ind1.pset, ind1.min_depth, ind1.max_depth)
+        new_ind1 = individual.Individual(ind1.a_range, ind1.pset, ind1.min_depth, ind1.max_depth)
         new_ind1.tree = copy.deepcopy(ind1.get_tree())
         
-        new_ind2 = individual.Individual(ind2.a_range, ind2.b_range, ind2.pset, ind2.min_depth, ind2.max_depth)
+        new_ind2 = individual.Individual(ind2.a_range, ind2.pset, ind2.min_depth, ind2.max_depth)
         new_ind2.tree = copy.deepcopy(ind2.get_tree())
         
         
@@ -82,6 +82,7 @@ class Evolution():
             n2 = random.choice(ind2.get_terminal_indicies())
             
             # swap terminal nodes
+
             n1_value = ind1.get_tree()[n1].value
             n2_value = ind2.get_tree()[n2].value
             
@@ -91,17 +92,13 @@ class Evolution():
                 
                 if n2_value == n.value:
                     new_ind1.tree[n1] = n
-            
-            #print('swapped terminals')
-            #print('swapped item in ind1: '+str(n1_value))
-            #print('with')
-            #print('swapped item in ind2: '+str(n2_value))
          
         
         else:
             n2 = random.choice(ind2.get_non_terminal_indicies())
             
             # swap non-terminal nodes
+
             n1_name = ind1.get_tree()[n1].name
             n2_name = ind2.get_tree()[n2].name
             
@@ -110,12 +107,7 @@ class Evolution():
                     new_ind2.tree[n2] = n
                 
                 if n2_name == n.name:
-                    new_ind1.tree[n1] = n
-                    
-            #print('swapped non-terminals')
-            #print('swapped item in ind1: '+n1_name)
-            #print('with')
-            #print('swapped item in ind2: '+n2_name)    
+                    new_ind1.tree[n1] = n 
      
         return new_ind1, new_ind2
     
@@ -156,8 +148,6 @@ class Evolution():
             
             for key in individuals.keys():
                 scores[key] = individuals[key].calc_fitness(calc_engine=calc_eng, k_max=k_max)
-                
-            #print(scores)
             
             # identify individuals to be dropped
             scores = pd.Series(scores).sort_values()

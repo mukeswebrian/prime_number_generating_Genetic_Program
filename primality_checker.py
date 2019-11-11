@@ -1,12 +1,12 @@
-import math
 class Checker():
 	'''
 	a custom class for checking if a given number is in the 
-	set of the first N primes
+	set of the primes in the range 0 to 100000
+    The user can specify the number of prime numbers N to be generated
 	'''
-	def __init__(self, N=1000, max_iter=1000):
+	def __init__(self, N=10000, max_iter=10000):
 		
-		# initalize list to contain the first N primes
+		# initalize list to contain primes
 		self.primes = []
 		
 		for i in range(2, max_iter):

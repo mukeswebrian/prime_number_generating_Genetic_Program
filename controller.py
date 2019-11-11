@@ -3,12 +3,14 @@ import pandas as pd
 import time
 import primality_checker as custom_engine
 
-use_matlab = False
+use_matlab = False # Only set this to true if you have a matlab installation and python-matlab library
 
 if use_matlab:
+    # optionally use matlab for primality checking
     import matlab.engine
     eng = matlab.engine.start_matlab()
 else:
+    # use custom primality checker by dafault
     eng = custom_engine.Checker()
 
 if __name__=='__main__':
@@ -24,8 +26,6 @@ if __name__=='__main__':
         
         a_max = int(el.a_range.iloc[i].split(',')[1])
         a_min = int(el.a_range.iloc[i].split(',')[0])
-        b_max = int(el.b_range.iloc[i].split(',')[1])
-        b_min = int(el.b_range.iloc[i].split(',')[0])
         
         exps[exp_id] = Experiment(exp_id=exp_id, 
                                 max_iter=el.max_iter.iloc[i], 
@@ -35,11 +35,10 @@ if __name__=='__main__':
                                 min_depth=el.min_depth.iloc[i], 
                                 max_depth=el.max_depth.iloc[i], 
                                 a_range=(a_min,a_max), 
-                                b_range=(b_min,b_max),
                                 p_mutate=el.p_mutate.iloc[i],
 								calc_eng=eng)
         
-    print('Experiment initalization complete!\n')
+    print('Experiment initalization completed successfully!\n')
         
     # Run each experiment and report results
     for i in exps.keys():
@@ -51,7 +50,7 @@ if __name__=='__main__':
         exps[i].report_results()
 
         end = time.time() # stop timer
-        print('completed in: '+str(end-strt)+' seconds')
+        print('completed in: '+str(end-strt)+' seconds \n\n')
     
 	# close matlab engine if it was used for calculation
     if use_matlab:

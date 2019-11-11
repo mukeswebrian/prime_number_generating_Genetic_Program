@@ -11,11 +11,7 @@ class Operator():
         
     def mul(self, arg1, arg2):
         return arg1*arg2
-		
-    '''
-    def sub(self, arg1, arg2):
-        return arg1 - arg2
-    '''
+
     def get_n_args(self):
         return self.n_args
     
