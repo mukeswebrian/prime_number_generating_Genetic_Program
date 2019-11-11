@@ -20,7 +20,8 @@ pip install networkx
 A matlab library folder is also included for the optional use of Matlab for prime checking
 Note 1: A MATLAB installation is required in order to use this option.
 Note 2: set use_matlab option to TRUE in controller.py to use this option
-
+Note 3: None of the code under the matlab folder was written by me. It is simply included as
+        a thrid party library for program completeness.
 
 ------------------------------------------------------------------------------------------
 How to run the program
