@@ -1,2 +1,3 @@
-python controller.py > EXPERIMENT_LOG.txt
+echo on
+python controller.py > Run_Log.txt
 pause

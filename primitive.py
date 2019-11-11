@@ -13,7 +13,6 @@ class Primitive():
         op = Operator() 
         self.pset.addPrimitive(op.add, [int, int], int)
         self.pset.addPrimitive(op.mul, [int, int], int)
-        #self.pset.addPrimitive(op.sub, [int, int], int)
         
     def get_pset(self):
         return self.pset

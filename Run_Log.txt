@@ -1,0 +1,31 @@
+Experiment initalization completed successfully!
+
+running experiment: 1
+completed in: 20.477197647094727 seconds 
+
+
+running experiment: 2
+completed in: 21.90997004508972 seconds 
+
+
+running experiment: 3
+completed in: 13.461977005004883 seconds 
+
+
+running experiment: 4
+completed in: 82.31871771812439 seconds 
+
+
+running experiment: 5
+completed in: 35.82420611381531 seconds 
+
+
+running experiment: 6
+completed in: 78.78487610816956 seconds 
+
+
+running experiment: 7
+completed in: 75.65608716011047 seconds 
+
+
+Done
