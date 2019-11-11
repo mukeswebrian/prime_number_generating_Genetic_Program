@@ -1,4 +1,4 @@
-This is a genetic program that finds prime number generating fucntions. 
+This is a genetic program that finds prime number generating functions. 
 The program was implemented using Python version 3.6.5
 
 Organization: University of Edinburgh, School of Informatics
