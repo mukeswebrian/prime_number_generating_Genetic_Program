@@ -12,10 +12,10 @@ Dependancies
 Before running this program, run the following commands to ensure that all the required
 libraries are installed on the system
 
-pip install deap
-pip install pandas
-pip install matplotlib
-pip install networkx
+<p>pip install deap</p>
+<p>pip install pandas</p>
+<p>pip install matplotlib</p>
+<p>pip install networkx</p>
 
 A matlab library folder is also included for the optional use of Matlab for prime checking
 Note 1: A MATLAB installation is required in order to use this option.
