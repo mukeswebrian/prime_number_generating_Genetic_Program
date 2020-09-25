@@ -3,7 +3,7 @@ The program was implemented using Python version 3.6.5
 
 Organization: University of Edinburgh, School of Informatics
 Date: November 11, 2019
-Exam Number: B145418
+
 
 
 -----------------------------------------------------------------------------------------
@@ -12,15 +12,15 @@ Dependancies
 Before running this program, run the following commands to ensure that all the required
 libraries are installed on the system
 
-<p>pip install deap</p>
-<p>pip install pandas</p>
-<p>pip install matplotlib</p>
-<p>pip install networkx</p>
+<code>pip install deap</code>
+<code>pip install pandas</code>
+<code>pip install matplotlib</code>
+<code>pip install networkx</code>
 
 A matlab library folder is also included for the optional use of Matlab for prime checking
-Note 1: A MATLAB installation is required in order to use this option.
-Note 2: set use_matlab option to TRUE in controller.py to use this option
-Note 3: None of the code under the matlab folder was written by me. It is simply included as
+- Note 1: A MATLAB installation is required in order to use this option.
+- Note 2: set use_matlab option to TRUE in controller.py to use this option
+- Note 3: None of the code under the matlab folder was written by me. It is simply included as
         a thrid party library for program completeness.
 
 ------------------------------------------------------------------------------------------
